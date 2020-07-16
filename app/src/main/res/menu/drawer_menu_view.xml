@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_top_articles"
+            android:icon="@drawable/icon_top_articles"
+            android:title="Top Articles" />
+        <item
+            android:id="@+id/nav_categories"
+            android:icon="@drawable/categories_icon"
+            android:title="Categories" />
+        <item
+            android:id="@+id/nav_write_articles"
+            android:icon="@drawable/icon_write_article"
+            android:title="Write Article" />
+    </group>
+
+
+    <item
+        android:title="Profile">
+
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/icon_login"
+                    android:title="Login" />
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/icon_profile"
+                    android:title="My Profile" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/icon_logout"
+                    android:title="Logout" />
+            </group>
+        </menu>
+    </item>
+
+
+    <item android:title="Communication">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_share"
+                    android:icon="@drawable/icon_share"
+                    android:title="Share" />
+                <item
+                    android:id="@+id/nav_aboutus"
+                    android:icon="@drawable/icon_about_us"
+                    android:title="About us" />
+            </group>
+        </menu>
+    </item>
+</menu>
