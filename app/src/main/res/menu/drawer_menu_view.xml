@@ -5,15 +5,15 @@
         <item
             android:id="@+id/nav_top_articles"
             android:icon="@drawable/icon_top_articles"
-            android:title="Top Articles" />
+            android:title="@string/menu_top_articles" />
         <item
             android:id="@+id/nav_categories"
             android:icon="@drawable/categories_icon"
-            android:title="Categories" />
+            android:title="@string/menu_categories" />
         <item
             android:id="@+id/nav_write_articles"
             android:icon="@drawable/icon_write_article"
-            android:title="Write Article" />
+            android:title="@string/menu_write_article" />
     </group>
 
 
@@ -25,15 +25,15 @@
                 <item
                     android:id="@+id/nav_login"
                     android:icon="@drawable/icon_login"
-                    android:title="Login" />
+                    android:title="@string/menu_login" />
                 <item
                     android:id="@+id/nav_profile"
                     android:icon="@drawable/icon_profile"
-                    android:title="My Profile" />
+                    android:title="@string/menu_my_profile" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/icon_logout"
-                    android:title="Logout" />
+                    android:title="@string/menu_logout" />
             </group>
         </menu>
     </item>
@@ -45,11 +45,11 @@
                 <item
                     android:id="@+id/nav_share"
                     android:icon="@drawable/icon_share"
-                    android:title="Share" />
+                    android:title="@string/menu_share" />
                 <item
                     android:id="@+id/nav_aboutus"
                     android:icon="@drawable/icon_about_us"
-                    android:title="About us" />
+                    android:title="@string/menu_about_us" />
             </group>
         </menu>
     </item>

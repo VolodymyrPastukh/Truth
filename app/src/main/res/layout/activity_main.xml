@@ -17,15 +17,12 @@
         app:headerLayout="@layout/header"
         app:menu="@menu/drawer_menu_view" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/header_backgr">
+            android:background="@drawable/cropped_newspaper_background"
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -37,7 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/icon_show_menu"/>
+                app:navigationIcon="@drawable/icon_show_menu" />
 
 
             <FrameLayout
@@ -49,6 +46,6 @@
         </LinearLayout>
 
 
-    </ScrollView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

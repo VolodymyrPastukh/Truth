@@ -1,11 +1,23 @@
 <resources>
     <string name="app_name">Truth</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_drawer_open">NavDrawer open</string>
     <string name="nav_drawer_close">NavDrawer Closed</string>
-    <string name="menu_write_text">Write Artcile</string>
-    <string name="menu_categories_page_text">Categories</string>
-    <string name="menu_article_page_text">Top Articles</string>
+
+
+    <string name="menu_top_articles">Top Articles</string>
+    <string name="menu_categories">Categories</string>
+    <string name="menu_write_article">Write Article</string>
+    <string name="menu_login">Login</string>
+    <string name="menu_my_profile">My Profile</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_about_us">About us</string>
+
+    <string name="name_newspaper">Правда</string>
+    <string name="wrA_owner">Owner</string>
+    <string name="wrA_date">Date</string>
+    <string name="wrA_name">Name</string>
+    <string name="wrA_description">Description</string>
+    <string name="wrA_write_article">Write article</string>
 </resources>

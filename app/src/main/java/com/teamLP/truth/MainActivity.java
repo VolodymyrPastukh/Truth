@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toogle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-//        fragmentManager = getSupportFragmentManager();
-////        fragmentTransaction = fragmentManager.beginTransaction();
-////        fragmentTransaction.add(R.id.flContent, new TopArticles());
-////        fragmentTransaction.commit();
+     fragmentManager = getSupportFragmentManager();
+     fragmentTransaction = fragmentManager.beginTransaction();
+     fragmentTransaction.add(R.id.flContent, new WriteArticle());
+     fragmentTransaction.commit();
     }
 
     @Override

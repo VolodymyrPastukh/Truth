@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:fontFamily="@font/roboto_slab_bold"
-        android:text="Правда"
-        android:textSize="30sp"></TextView>
+        android:text="@string/name_newspaper"
+        android:textSize="30sp"/>
 
 </LinearLayout>
