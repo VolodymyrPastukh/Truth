@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.teamLP.truth.model.Article;
+import com.teamLP.truth.model.ArticleModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -79,7 +79,7 @@ public class WriteArticle extends ControllerArticle implements View.OnClickListe
             own = ownerArticle.getText().toString();
 
             if (!nam.isEmpty() && !desk.isEmpty() && !cont.isEmpty()) {
-                generateArticle(new Article(nam, desk, cont, dat, own));
+                generateArticle(new ArticleModel(nam, desk, cont, dat, own));
                 name.setText("");
                 description.setText("");
                 content.setText("");

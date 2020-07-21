@@ -7,83 +7,98 @@
     tools:context=".WriteArticle">
 
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/sendArt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="1.0"
-            android:scrollbars="vertical">
-
-            <EditText
-                android:id="@+id/nameArticle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/wrA_name"
-                android:ems="10"
-                android:gravity="center_horizontal"
-                android:hint="@string/wrA_name"
-                android:inputType="textPersonName"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/articleDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="@string/wrA_description"
-                android:inputType="textMultiLine"
-                android:maxLength="60"
-                android:textColor="#454444"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameArticle"
-                android:autofillHints="@string/wrA_description"/>
-
-            <EditText
-                android:id="@+id/contentArticle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="@string/wrA_write_article"
-                android:inputType="textMultiLine"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/articleDescription"
-                app:layout_constraintVertical_bias="0.159"
-                android:autofillHints="@string/wrA_write_article"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/sendArt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Send"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="1.0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/sendArt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintVertical_bias="1.0">
+
+                <EditText
+                    android:id="@+id/nameArticle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@string/wrA_name"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/wrA_name"
+                    android:inputType="textPersonName"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/articleDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:autofillHints="@string/wrA_description"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/wrA_description"
+                    android:inputType="textMultiLine"
+                    android:maxLength="60"
+                    android:textColor="#454444"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nameArticle" />
+
+                <EditText
+                    android:id="@+id/contentArticle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@string/wrA_write_article"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/wrA_write_article"
+                    android:inputType="textMultiLine"
+                    app:layout_constraintBottom_toTopOf="@+id/sendArt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/articleDescription"
+                    app:layout_constraintVertical_bias="0.11" />
+
+                <Button
+                    android:id="@+id/sendArt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Send"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="409dp"
-            android:layout_height="178dp"
+            android:layout_height="120dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

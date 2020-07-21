@@ -1,21 +1,20 @@
 package com.teamLP.truth;
 
-import android.annotation.SuppressLint;
-
 
 import androidx.fragment.app.Fragment;
 
-import com.teamLP.truth.model.Article;
+import com.teamLP.truth.model.ArticleModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ControllerArticle extends Fragment {
-    public static List<Article> containerArticles = new ArrayList<Article>();
+    public static List<ArticleModel> containerArticles = new ArrayList<ArticleModel>();
 
+    public static int numSelectArticle;
 
-    public void generateArticle(Article article){
+    public void generateArticle(ArticleModel article){
         containerArticles.add(article);
     }
 
