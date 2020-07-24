@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,29 +9,47 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/paper_article"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/viewNameArticle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/roboto_slab_bold"
             android:gravity="center_horizontal"
             android:text="Name"
+            android:textColor="#000000"
             android:textSize="30sp" />
 
         <TextView
             android:id="@+id/viewDescriptionArticle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:fontFamily="@font/roboto_slab_thin"
             android:text="Description"
+            android:textColor="#000000"
             android:textSize="24sp" />
 
         <TextView
             android:id="@+id/viewContentArticle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/roboto_slab_thin"
             android:text="Content"
+            android:textColor="#353434"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/viewPictureArticle"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/image_icon" />
 
         <TextView
             android:id="@+id/viewOwnerArticle"
@@ -42,6 +61,7 @@
             android:id="@+id/viewDateArticle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:text="Date" />
     </LinearLayout>
 </FrameLayout>

@@ -7,11 +7,10 @@
     tools:context=".WriteArticle">
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="@drawable/gradient_menu">
 
 
         <androidx.core.widget.NestedScrollView
@@ -71,17 +70,16 @@
                     android:id="@+id/contentArticle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
                     android:autofillHints="@string/wrA_write_article"
                     android:ems="10"
                     android:gravity="start|top"
                     android:hint="@string/wrA_write_article"
                     android:inputType="textMultiLine"
-                    app:layout_constraintBottom_toTopOf="@+id/sendArt"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/articleDescription"
-                    app:layout_constraintVertical_bias="0.11" />
+                    app:layout_constraintTop_toBottomOf="@+id/articleDescription" />
 
                 <Button
                     android:id="@+id/sendArt"
@@ -91,6 +89,17 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/pic_article"
+                    android:layout_width="279dp"
+                    android:layout_height="267dp"
+                    android:layout_marginBottom="40dp"
+                    android:src="@drawable/image_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/sendArt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/contentArticle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
@@ -107,7 +116,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:cardBackgroundColor="#FFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -136,7 +146,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:cardBackgroundColor="#00FFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,6 +158,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        app:cardBackgroundColor="#FFFFFF"
                         app:cardElevation="2dp">
 
                         <LinearLayout
@@ -175,7 +187,8 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="#FFFFFF">
 
                         <LinearLayout
                             android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.teamLP.truth.model.ArticleModel;
@@ -19,6 +20,7 @@ public class Article extends ControllerArticle {
     TextView content;
     TextView owner;
     TextView date;
+    ImageView picture;
 
 
     @Override
@@ -31,6 +33,7 @@ public class Article extends ControllerArticle {
         content = rootView.findViewById(R.id.viewContentArticle);
         owner = rootView.findViewById(R.id.viewOwnerArticle);
         date = rootView.findViewById(R.id.viewDateArticle);
+        picture = rootView.findViewById(R.id.viewPictureArticle);
 
         viewArticle(numSelectArticle);
 
@@ -45,5 +48,7 @@ public class Article extends ControllerArticle {
         content.setText(art.contentArticle);
         owner.setText(art.owner);
         date.setText(art.dateArticle);
+        picture.setImageBitmap(art.bitmap);
+
     }
 }
