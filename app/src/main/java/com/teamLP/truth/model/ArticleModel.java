@@ -2,9 +2,10 @@ package com.teamLP.truth.model;
 
 import android.graphics.Bitmap;
 
+
 public class ArticleModel {
-    public static int idArticle;
     public String nameArticle;
+    public String categoryArticle;
     public String descriptionArticle;
     public String contentArticle;
     public String dateArticle;
@@ -12,9 +13,9 @@ public class ArticleModel {
     public Bitmap bitmap;
 
 
-    public ArticleModel(String nameArticle, String descriptionArticle, String contentArticle, String dateArticle, String owner, Bitmap bitmap) {
-        idArticle++;
+    public ArticleModel(String nameArticle, String categoryArticle, String descriptionArticle, String contentArticle, String dateArticle, String owner, Bitmap bitmap) {
         this.nameArticle = nameArticle;
+        this.categoryArticle = categoryArticle;
         this.descriptionArticle = descriptionArticle;
         this.contentArticle = contentArticle;
         this.dateArticle = dateArticle;
@@ -24,3 +25,4 @@ public class ArticleModel {
 
 
 }
+

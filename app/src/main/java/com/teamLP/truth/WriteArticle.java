@@ -9,9 +9,12 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +38,11 @@ public class WriteArticle extends ControllerArticle implements View.OnClickListe
     EditText content;
     TextView dateArticle;
     TextView ownerArticle;
+    Spinner categoryArticle;
+
 
     private final int PICK_IMAGE = 1;
-    String nam, desk, cont, dat, own;
+    String nam, cat, desk, cont, dat, own;
     Bitmap bit;
 
     Date dateNow = new Date();
@@ -48,6 +53,8 @@ public class WriteArticle extends ControllerArticle implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_write_article, container, false);
+
+        final String[] categories = getResources().getStringArray(R.array.categories);
 
         button = rootView.findViewById(R.id.sendArt);
         button.setOnClickListener(this);
@@ -62,6 +69,27 @@ public class WriteArticle extends ControllerArticle implements View.OnClickListe
         ownerArticle = rootView.findViewById(R.id.ownerArticleWrite);
 
         dateArticle.setText(formatForDate.format(dateNow));
+        categoryArticle = rootView.findViewById(R.id.categoryArticle);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoryArticle.setAdapter(adapter);
+        // заголовок
+        categoryArticle.setPrompt("Category");
+
+        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = (String)parent.getItemAtPosition(position);
+                cat = item;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                categoryArticle.setSelection(6);
+            }
+        };
+        categoryArticle.setOnItemSelectedListener(itemSelectedListener);
 
         return rootView;
     }
@@ -79,10 +107,12 @@ public class WriteArticle extends ControllerArticle implements View.OnClickListe
 
 
                 if (!nam.isEmpty() && !desk.isEmpty() && !cont.isEmpty()) {
-                    generateArticle(new ArticleModel(nam, desk, cont, dat, own, bit));
+                    generateArticle(new ArticleModel(nam, cat, desk, cont, dat, own, bit));
                     name.setText("");
                     description.setText("");
                     content.setText("");
+                    categoryArticle.setSelection(6);
+                    bit = null;
                     picture1.setImageResource(R.drawable.image_icon);
                 } else {
                     Toast.makeText(getActivity(), "Fill in every row pls!!!", Toast.LENGTH_SHORT).show();

@@ -20,7 +20,11 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TopArticles.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity
+        implements
+        NavigationView.OnNavigationItemSelectedListener,
+        TopArticles.OnFragmentInteractionListener,
+        Categories.OnSelectCategoryListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -84,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.nav_write_articles:
                     fragmentClass = WriteArticle.class;
                     break;
+                case R.id.nav_categories:
+                    fragmentClass = Categories.class;
+                    break;
                 default:
                     fragmentClass = TopArticles.class;
             }
@@ -120,5 +127,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.flContent, new Article());
         fragmentTransaction.commit();
 
+    }
+
+    public void onSelectCategory(){
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.flContent, new SelectedCategory());
+        fragmentTransaction.commit();
     }
 }

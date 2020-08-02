@@ -1,5 +1,6 @@
 package com.teamLP.truth;
 
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -16,53 +17,64 @@ import android.widget.Toast;
 
 import com.teamLP.truth.model.ArticleModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class TopArticles extends ControllerArticle {
+public class SelectedCategory extends ControllerArticle {
 
-    ListView articleList;
-    private OnFragmentInteractionListener mListener;
+    ListView categoryArticleList;
+    private TopArticles.OnFragmentInteractionListener selectArticle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_top_articles, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_selected_category, container, false);
 
-        articleList = (ListView) rootView.findViewById(R.id.articlesList);
-        ArticleAdapter adapter = new ArticleAdapter(getActivity(), containerArticles);
-        articleList.setAdapter(adapter);
+        categoryArticleList = (ListView) rootView.findViewById(R.id.selectedCategoryList);
+        CategoryArticleAdapter adapter = new CategoryArticleAdapter(getActivity(), getCategoryList());
+        categoryArticleList.setAdapter(adapter);
 
         //Перехід на конкретну статтю
-        articleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        categoryArticleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 String message = ((TextView) view.findViewById(R.id.articleName)).getText().toString();
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 nameSelectArticle = message;
-                mListener.onFragmentInteraction();
+                selectArticle.onFragmentInteraction();
             }
         });
 
         return rootView;
     }
 
-    interface OnFragmentInteractionListener {
+    /*interface OnFragmentInteractionListener {
 
         void onFragmentInteraction();
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mListener = (OnFragmentInteractionListener) context;
+            selectArticle = (TopArticles.OnFragmentInteractionListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " должен реализовывать интерфейс OnFragmentInteractionListener");
         }
     }
 
+    public List<ArticleModel> getCategoryList(){
+        List<ArticleModel> selectedCategoryList = new ArrayList<ArticleModel>();
+        for (ArticleModel el:containerArticles) {
+            if(nameSelectCategory.equals(el.categoryArticle)){
+                selectedCategoryList.add(el);
+                Log.d("New List el - " + el.nameArticle, " | has category ---> " + el.categoryArticle);
+            }
+        }
+        return selectedCategoryList;
+    }
 
 }
 
@@ -77,12 +89,12 @@ public class TopArticles extends ControllerArticle {
 
 
 
-class ArticleAdapter extends ArrayAdapter<ArticleModel>
+class CategoryArticleAdapter extends ArrayAdapter<ArticleModel>
 {
     private Context context;
     public List<ArticleModel> articles;
 
-    public ArticleAdapter(Context context, List<ArticleModel> articles)
+    public CategoryArticleAdapter(Context context, List<ArticleModel> articles)
     {
         super(context, R.layout.list_articles, articles);
         this.context   = context;
@@ -97,7 +109,6 @@ class ArticleAdapter extends ArrayAdapter<ArticleModel>
         View     view       = inflater.inflate(R.layout.list_articles, parent, false);
         ArticleModel article = articles.get(position);
         TextView articleNameView = (TextView) view.findViewById(R.id.articleName);
-        TextView articleCategoryView = (TextView) view.findViewById(R.id.articleCategory);
         TextView articleDescriptionView = (TextView) view.findViewById(R.id.articleDescription);
         TextView articleOwnerView = (TextView) view.findViewById(R.id.articleOwner);
         TextView articleDateView = (TextView) view.findViewById(R.id.articleDate);
@@ -105,7 +116,6 @@ class ArticleAdapter extends ArrayAdapter<ArticleModel>
 
 
         articleNameView.setText(article.nameArticle);
-        articleCategoryView.setText(article.categoryArticle);
         articleDescriptionView.setText(article.descriptionArticle);
         articleOwnerView.setText(article.owner);
         articleDateView.setText(article.dateArticle);

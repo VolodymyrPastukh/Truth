@@ -20,6 +20,17 @@
     <string name="wrA_name">Name</string>
     <string name="wrA_description">Description</string>
     <string name="wrA_write_article">Write article</string>
+
+
+    <string-array name="categories">
+        <item>Політика</item>
+        <item>Економіка</item>
+        <item>Наука</item>
+        <item>Кримінал</item>
+        <item>Культура</item>
+        <item>Спорт</item>
+        <item>Всяка всячина</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

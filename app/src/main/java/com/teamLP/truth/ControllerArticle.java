@@ -12,7 +12,8 @@ import java.util.List;
 public class ControllerArticle extends Fragment {
     public static List<ArticleModel> containerArticles = new ArrayList<ArticleModel>();
 
-    public static int numSelectArticle;
+    public static String nameSelectCategory;
+    public static String nameSelectArticle;
 
     public void generateArticle(ArticleModel article){
         containerArticles.add(article);
