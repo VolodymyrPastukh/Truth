@@ -1,11 +1,67 @@
 <resources>
     <string name="app_name">Truth</string>
+    <string name="name_newspaper">Правда</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_drawer_open">NavDrawer open</string>
     <string name="nav_drawer_close">NavDrawer Closed</string>
-    <string name="menu_write_text">Write Artcile</string>
-    <string name="menu_categories_page_text">Categories</string>
-    <string name="menu_article_page_text">Top Articles</string>
+
+
+    <!-- menu text -->
+    <string name="menu_top_articles">Top Articles</string>
+    <string name="menu_categories">Categories</string>
+    <string name="menu_write_article">Write Article</string>
+    <string name="menu_login">Login</string>
+    <string name="menu_my_profile">My Profile</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_about_us">About us</string>
+
+    <!-- write article view -->
+    <string name="wrA_owner">Owner</string>
+    <string name="wrA_date">Date</string>
+    <string name="wrA_name">Name</string>
+    <string name="wrA_description">Description</string>
+    <string name="wrA_write_article">Write article</string>
+
+    <!-- welcome screen -->
+    <string name="welcome_screen_title">|Правда|</string>
+    <string name="welcome_screen_subtitle">твоя думка важлива</string>
+
+    <string name="login_title">Login</string>
+    <string name="signUp_title">Sign Up</string>
+    <string name="asGuest_title">as Guest</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_phone">Enter phone</string>
+    <string name="rememberMe">Remember me</string>
+
+    <string name="username">Username</string>
+    <string name="full_name">Full name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="next">Next</string>
+    <string name="phone_number">Phone number</string>
+
+
+    <string-array name="categories">
+        <item>Політика</item>
+        <item>Економіка</item>
+        <item>Наука</item>
+        <item>Кримінал</item>
+        <item>Культура</item>
+        <item>Спорт</item>
+        <item>Всяка всячина</item>
+    </string-array>
+
+    <string name="ct_pol">Політика</string>
+    <string name="ct_eco">Економіка</string>
+    <string name="ct_sci">Наука</string>
+    <string name="ct_cri">Культура</string>
+    <string name="ct_cul">Кримінал</string>
+    <string name="ct_spo">Спорт</string>
+    <string name="ct_oth">Всяка всячина</string>
+    <string name="forget_password">Forget password</string>
+
+
+
 </resources>

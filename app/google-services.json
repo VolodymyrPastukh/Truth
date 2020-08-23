@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "869481343361",
+    "firebase_url": "https://truth-401ab.firebaseio.com",
+    "project_id": "truth-401ab",
+    "storage_bucket": "truth-401ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869481343361:android:7d079e717ae1d2603da080",
+        "android_client_info": {
+          "package_name": "com.teamLP.truth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869481343361-nu7ag8qoi552b6ef5fams41bm6rakn14.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teamLP.truth",
+            "certificate_hash": "f24376352843f6ef3fd3f3efc1aeaa1ad12688b5"
+          }
+        },
+        {
+          "client_id": "869481343361-redqf8a78airi44urhfhcjaie9nncr1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh30V-br9ZLmRfQGNV7vlaRw0WcsngPYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869481343361-redqf8a78airi44urhfhcjaie9nncr1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
