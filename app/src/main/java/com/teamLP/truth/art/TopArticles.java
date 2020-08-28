@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.teamLP.truth.R;
 import com.teamLP.truth.art.model.ArticleModel;
 
@@ -22,6 +23,7 @@ public class TopArticles extends ControllerArticle {
 
     ListView articleList;
     private OnSelectArticleListener mListener;
+    public ArticleAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,17 +31,17 @@ public class TopArticles extends ControllerArticle {
         View rootView = inflater.inflate(R.layout.fragment_top_articles, container, false);
 
         articleList = (ListView) rootView.findViewById(R.id.articlesList);
-        ArticleAdapter adapter = new ArticleAdapter(getActivity(), containerArticles);
+        adapter = new ArticleAdapter(getActivity(), containerArticles);
         articleList.setAdapter(adapter);
+        getDataArticle(adapter);
 
         //Перехід на конкретну статтю
         articleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String message = ((TextView) view.findViewById(R.id.articleName)).getText().toString();
+                String message = ((TextView) view.findViewById(R.id.articleName)).getText().toString().trim();
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                nameSelectArticle = message;
-                mListener.onSelectArticle();
+                mListener.onSelectArticle(message);
             }
         });
 
@@ -48,7 +50,7 @@ public class TopArticles extends ControllerArticle {
 
     interface OnSelectArticleListener {
 
-        void onSelectArticle();
+        void onSelectArticle(String nameArticle);
     }
 
     @Override
@@ -66,34 +68,21 @@ public class TopArticles extends ControllerArticle {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-class ArticleAdapter extends ArrayAdapter<ArticleModel>
-{
+class ArticleAdapter extends ArrayAdapter<ArticleModel> {
     private Context context;
     public List<ArticleModel> articles;
 
-    public ArticleAdapter(Context context, List<ArticleModel> articles)
-    {
+    public ArticleAdapter(Context context, List<ArticleModel> articles) {
         super(context, R.layout.list_articles, articles);
-        this.context   = context;
+        this.context = context;
         this.articles = articles;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View     view       = inflater.inflate(R.layout.list_articles, parent, false);
+        View view = inflater.inflate(R.layout.list_articles, parent, false);
         ArticleModel article = articles.get(position);
         TextView articleNameView = (TextView) view.findViewById(R.id.articleName);
         TextView articleCategoryView = (TextView) view.findViewById(R.id.articleCategory);
@@ -108,14 +97,18 @@ class ArticleAdapter extends ArrayAdapter<ArticleModel>
         articleDescriptionView.setText(article.descriptionArticle);
         articleOwnerView.setText(article.owner);
         articleDateView.setText(article.dateArticle);
-        articlePictureView.setImageBitmap(article.bitmap);
+        if (article.image != null) {
+            articlePictureView.setVisibility(View.VISIBLE);
+            Picasso.get().load(article.image).into(articlePictureView);
+        } else {
+            articlePictureView.setVisibility(View.GONE);
+        }
 
         return view;
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return articles.size();
     }
 }

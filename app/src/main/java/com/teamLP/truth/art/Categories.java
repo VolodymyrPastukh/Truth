@@ -20,6 +20,8 @@ public class Categories extends ControllerArticle {
 
     ListView categoryList;
     private OnSelectCategoryListener categoryListener;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,10 +38,9 @@ public class Categories extends ControllerArticle {
         categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String message = ((TextView) view.findViewById(R.id.nameCategory)).getText().toString();
+                String message = ((TextView) view.findViewById(R.id.nameCategory)).getText().toString().trim();
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                nameSelectCategory = message;
-                categoryListener.onSelectCategory();
+                categoryListener.onSelectCategory(message);
             }
         });
         return rootView;
@@ -47,7 +48,7 @@ public class Categories extends ControllerArticle {
 
     interface OnSelectCategoryListener {
 
-        void onSelectCategory();
+        void onSelectCategory(String category);
     }
 
     @Override

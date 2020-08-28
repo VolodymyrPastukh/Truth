@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
 import com.teamLP.truth.Users.Login;
 import com.teamLP.truth.R;
+import com.teamLP.truth.Users.WelcomeScreen;
 
 public class Content extends AppCompatActivity
         implements
@@ -37,7 +38,7 @@ public class Content extends AppCompatActivity
     Toolbar toolbar;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
-    String owner;
+    String owner, phone;
 
 
 
@@ -49,7 +50,8 @@ public class Content extends AppCompatActivity
 
         Bundle startArgs = getIntent().getExtras();
         int key = startArgs.getInt("startKey");
-        owner =startArgs.getString("username");
+        owner = startArgs.getString("username");
+        phone = startArgs.getString("phone");
 
 
         /*-----------Hooks----------*/
@@ -82,22 +84,16 @@ public class Content extends AppCompatActivity
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        //animateNavigationDrawer();
+        animateNavigationDrawer();
 
 
         /*-----------First page----------*/
-        if(key > 0){
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.flContent, new Categories());
-            fragmentTransaction.commit();
-        }
-        else{
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.flContent, new Categories());
-            fragmentTransaction.commit();
-        }
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.flContent, new TopArticles());
+        fragmentTransaction.commit();
+
 
     }
 
@@ -117,7 +113,6 @@ public class Content extends AppCompatActivity
                     openFragment(fragmentClass);
                     break;
                 case R.id.nav_write_articles:
-                    //fragmentClass = WriteArticle.class;
                     fragmentManager = getSupportFragmentManager();
                     Fragment writeArticle = WriteArticle.newInstance(owner);
                     fragmentManager.beginTransaction().replace(R.id.flContent, writeArticle).commit();
@@ -129,6 +124,15 @@ public class Content extends AppCompatActivity
                 case R.id.nav_login:
                     Intent loginIntent = new Intent(this, Login.class);
                     startActivity(loginIntent);
+                    break;
+                case R.id.nav_profile:
+                    fragmentManager = getSupportFragmentManager();
+                    Fragment profile = Profile.newInstance(phone);
+                    fragmentManager.beginTransaction().replace(R.id.flContent, profile).commit();
+                    break;
+                case R.id.nav_logout:
+                    Intent logout = new Intent(this, WelcomeScreen.class);
+                    startActivity(logout);
                     break;
                 default:
                     fragmentClass = TopArticles.class;
@@ -197,20 +201,19 @@ public class Content extends AppCompatActivity
      /*----------------------------Fragment`s methods-----------------------------------*/
     /*---Select article---*/
     @Override
-    public void onSelectArticle() {
-
+    public void onSelectArticle(String nameArticle) {
+        setTitle(nameArticle);
         fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.flContent, new Article());
-        fragmentTransaction.commit();
+        Fragment article = Article.newInstance(nameArticle);
+        fragmentManager.beginTransaction().replace(R.id.flContent, article).commit();
 
     }
 
     /*---Select category---*/
-    public void onSelectCategory(){
+    public void onSelectCategory(String category){
+        setTitle(category);
         fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.flContent, new SelectedCategory());
-        fragmentTransaction.commit();
+        Fragment newCategory = SelectedCategory.newInstance(category);
+        fragmentManager.beginTransaction().replace(R.id.flContent, newCategory).commit();
     }
 }

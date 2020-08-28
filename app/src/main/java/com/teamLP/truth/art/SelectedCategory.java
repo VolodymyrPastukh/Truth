@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.teamLP.truth.art.model.ArticleModel;
 import com.teamLP.truth.R;
 
@@ -26,24 +27,33 @@ public class SelectedCategory extends ControllerArticle {
 
     ListView categoryArticleList;
     private TopArticles.OnSelectArticleListener selectArticle;
+    private static final String NAME_CATEGORY = "name_category";
+
+    public static SelectedCategory newInstance(String nameCategory) {
+        Bundle args = new Bundle();
+        args.putString(NAME_CATEGORY, nameCategory);
+        SelectedCategory fragment = new SelectedCategory();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_selected_category, container, false);
 
+
         categoryArticleList = (ListView) rootView.findViewById(R.id.selectedCategoryList);
-        CategoryArticleAdapter adapter = new CategoryArticleAdapter(getActivity(), getCategoryList());
+        CategoryArticleAdapter adapter = new CategoryArticleAdapter(getActivity(), getCategoryList(getArguments().getString(NAME_CATEGORY)));
         categoryArticleList.setAdapter(adapter);
 
         //Перехід на конкретну статтю
         categoryArticleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String message = ((TextView) view.findViewById(R.id.articleName)).getText().toString();
+                String message = ((TextView) view.findViewById(R.id.articleName)).getText().toString().trim();
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                nameSelectArticle = message;
-                selectArticle.onSelectArticle();
+                selectArticle.onSelectArticle(message);
             }
         });
 
@@ -62,10 +72,10 @@ public class SelectedCategory extends ControllerArticle {
         }
     }
 
-    public List<ArticleModel> getCategoryList(){
+    public List<ArticleModel> getCategoryList(String category){
         List<ArticleModel> selectedCategoryList = new ArrayList<ArticleModel>();
         for (ArticleModel el:containerArticles) {
-            if(nameSelectCategory.equals(el.categoryArticle)){
+            if(category.equals(el.categoryArticle)){
                 selectedCategoryList.add(el);
                 Log.d("New List el - " + el.nameArticle, " | has category ---> " + el.categoryArticle);
             }
@@ -116,7 +126,12 @@ class CategoryArticleAdapter extends ArrayAdapter<ArticleModel>
         articleDescriptionView.setText(article.descriptionArticle);
         articleOwnerView.setText(article.owner);
         articleDateView.setText(article.dateArticle);
-        articlePictureView.setImageBitmap(article.bitmap);
+        if (article.image != null) {
+            articlePictureView.setVisibility(View.VISIBLE);
+            Picasso.get().load(article.image).into(articlePictureView);
+        } else {
+            articlePictureView.setVisibility(View.GONE);
+        }
 
         return view;
     }

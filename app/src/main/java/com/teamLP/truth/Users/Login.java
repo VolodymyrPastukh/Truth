@@ -7,6 +7,8 @@ import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -21,6 +23,7 @@ import com.teamLP.truth.art.Content;
 public class Login extends AppCompatActivity {
 
     TextInputLayout enteredPhone, enteredPassword;
+    RelativeLayout progresBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,8 @@ public class Login extends AppCompatActivity {
 
         enteredPhone = findViewById(R.id.enter_phone);
         enteredPassword = findViewById(R.id.enter_password);
+        progresBar = findViewById(R.id.progressBar);
+        progresBar.setVisibility(View.GONE);
     }
 
     public void logIn(View view){
@@ -35,8 +40,10 @@ public class Login extends AppCompatActivity {
             return;
         }
 
+        progresBar.setVisibility(View.VISIBLE);
 
-        final String _phoneNumber = "+" + enteredPhone.getEditText().getText().toString().trim();
+
+        final String _phoneNumber = enteredPhone.getEditText().getText().toString().trim();
         final String _password = enteredPassword.getEditText().getText().toString().trim();
 
         Query checkUser = FirebaseDatabase.getInstance().getReference("User").orderByChild("phoneNumber").equalTo(_phoneNumber);
@@ -57,10 +64,12 @@ public class Login extends AppCompatActivity {
                         Intent login = new Intent(Login.this, Content.class);
                         login.putExtra("username", username);
                         login.putExtra("startKey", 1);
+                        login.putExtra("phone", _phoneNumber);
                         startActivity(login);
 
                     }
                     else{
+                        progresBar.setVisibility(View.GONE);
                         Toast.makeText(Login.this, "Bad password!!!", Toast.LENGTH_SHORT).show();
                     }
                 }else{
@@ -70,6 +79,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                progresBar.setVisibility(View.GONE);
                 Toast.makeText(Login.this, "??????", Toast.LENGTH_SHORT).show();
             }
         });

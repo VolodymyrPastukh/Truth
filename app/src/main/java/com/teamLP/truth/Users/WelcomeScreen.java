@@ -46,5 +46,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+    }
 }
