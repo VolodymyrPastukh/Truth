@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Categories">
+    tools:context=".art.Categories">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
         <ListView
             android:id="@+id/categoryList"
@@ -19,6 +20,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp" />
+            android:layout_marginLeft="0dp"
+            android:divider="@drawable/separator"
+            android:dividerHeight="5dp"/>
     </RelativeLayout>
 </FrameLayout>
