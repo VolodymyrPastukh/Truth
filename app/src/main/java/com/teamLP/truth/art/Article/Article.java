@@ -1,30 +1,24 @@
-package com.teamLP.truth.art;
+package com.teamLP.truth.art.Article;
 
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.squareup.picasso.Picasso;
 import com.teamLP.truth.R;
+import com.teamLP.truth.art.model.ArticleData;
 import com.teamLP.truth.art.model.ArticleModel;
 
 
-public class Article extends ControllerArticle implements View.OnClickListener {
+public class Article extends Fragment {
 
     TextView name;
     TextView category;
@@ -36,9 +30,14 @@ public class Article extends ControllerArticle implements View.OnClickListener {
     ImageView picture;
     ImageView like;
 
-    DatabaseReference ref;
+
+
+    DatabaseReference referenceDB;
+    private ArticleModel model;
+    private ArticlePresenter presenter;
 
     private static final String NAME_ARTICLE = "name_article";
+    private String aName;
 
     public static Article newInstance(String nameArticle) {
         Bundle args = new Bundle();
@@ -54,11 +53,20 @@ public class Article extends ControllerArticle implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_article, container, false);
 
         init(rootView);
-        viewArticle(selectArticle(getArguments().getString(NAME_ARTICLE)));
+        presenter.loadArticleData(aName);
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.likeArticle(aName);
+            }
+        });
+
         return rootView;
     }
 
     private void init(View rootView){
+        aName = getArguments().getString(NAME_ARTICLE);
+
         name = rootView.findViewById(R.id.viewNameArticle);
         category = rootView.findViewById(R.id.viewCategoryArticle);
         description = rootView.findViewById(R.id.viewDescriptionArticle);
@@ -68,18 +76,17 @@ public class Article extends ControllerArticle implements View.OnClickListener {
         picture = rootView.findViewById(R.id.viewPictureArticle);
         likes = rootView.findViewById(R.id.viewLikes);
         like = rootView.findViewById(R.id.like);
-        like.setOnClickListener(this);
 
-        ref = FirebaseDatabase.getInstance()
-                .getReference("Article")
-                .child(getArguments().getString(NAME_ARTICLE))
-                .child("likes");
+        referenceDB = FirebaseDatabase.getInstance().getReference("Article");
+        model = new ArticleModel(referenceDB);
+        presenter = new ArticlePresenter(model);
+        presenter.setView(this);
 
     }
 
 
-    public void viewArticle(ArticleModel selectArticle) {
-        ArticleModel art = selectArticle;
+    protected void viewArticle(ArticleData selectArticle) {
+        ArticleData art = selectArticle;
         name.setText(art.nameArticle);
         category.setText("[" + art.categoryArticle + "]");
         description.setText(art.descriptionArticle);
@@ -96,52 +103,8 @@ public class Article extends ControllerArticle implements View.OnClickListener {
 
     }
 
-    public ArticleModel selectArticle(String selectName) {
-        int i = 0;
-        ArticleModel selectArt;
-        selectArt = containerArticles.get(i);
-        while (!selectName.equals(selectArt.nameArticle)) {
-            selectArt = containerArticles.get(i);
-            i++;
-        }
-        Log.i("Article" + i, selectArt.nameArticle);
 
-        return selectArt;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.like:
-
-                ref.runTransaction(new Transaction.Handler() {
-                    @NonNull
-                    @Override
-                    public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                        Integer lk = currentData.getValue(Integer.class);
-                        if(lk == null){
-                            return Transaction.success(currentData);
-                        }
-                        Integer res = lk + 1;
-                        currentData.setValue(res);
-                        return Transaction.success(currentData);
-                    }
-
-                    @Override
-                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-                        if(error == null){
-                            setLikes();
-                            Toast.makeText(getActivity(), "Likeeeeeeeeee", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Log.e("Like", "Like error");
-                        }
-                    }
-                });
-                break;
-        }
-    }
-
-    private void setLikes(){
+    protected void setLikes(){
         int lukas = Integer.parseInt(likes.getText().toString().trim());
          likes.setText(String.valueOf(lukas + 1));
          like.setClickable(false);

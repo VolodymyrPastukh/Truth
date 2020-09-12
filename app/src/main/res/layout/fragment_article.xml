@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rectangle_shape"
-    tools:context=".art.Article">
+    tools:context=".art.Article.Article">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

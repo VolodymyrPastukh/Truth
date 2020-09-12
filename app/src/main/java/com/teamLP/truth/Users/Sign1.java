@@ -10,10 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.teamLP.truth.R;
-import com.teamLP.truth.art.TopArticles;
 
 
 public class Sign1 extends Fragment implements View.OnClickListener {
