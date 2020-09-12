@@ -49,7 +49,10 @@ public class Profile extends Fragment {
         age = rootView.findViewById(R.id.profile_age);
         ownInfo = rootView.findViewById(R.id.profile_ownInfo);
 
-        Query takeUser = FirebaseDatabase.getInstance().getReference("User").orderByChild("phoneNumber").equalTo(phoneUser);
+        Query takeUser = FirebaseDatabase.getInstance()
+                .getReference("User")
+                .orderByChild("phoneNumber")
+                .equalTo(phoneUser);
 
         takeUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -13,10 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.teamLP.truth.R;
 
 
-public class Categories extends ControllerArticle {
+public class Categories extends Fragment {
 
     ListView categoryList;
     private OnSelectCategoryListener categoryListener;

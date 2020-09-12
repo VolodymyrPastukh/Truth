@@ -21,6 +21,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.teamLP.truth.Users.Login;
 import com.teamLP.truth.R;
 import com.teamLP.truth.Users.WelcomeScreen;
+import com.teamLP.truth.art.Article.Article;
+import com.teamLP.truth.art.SelectedCategory.SelectedCategory;
+import com.teamLP.truth.art.TopArticles.TopArticles;
+import com.teamLP.truth.art.WriteArticle.WriteArticle;
 
 public class Content extends AppCompatActivity
         implements
