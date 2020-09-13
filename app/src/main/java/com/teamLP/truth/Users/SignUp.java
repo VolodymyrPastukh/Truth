@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.teamLP.truth.R;
+import com.teamLP.truth.Users.Verification.Verification;
 
 public class SignUp extends AppCompatActivity implements Sign1.ToNextSignListener, Sign2.completeSignIn{
 

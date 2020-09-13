@@ -1,6 +1,6 @@
 package com.teamLP.truth.Users.model;
 
-public class User {
+public class UserData {
     String username;
     String fullname;
     String email;
@@ -10,10 +10,10 @@ public class User {
     String owninfo;
     String age;
 
-    public User() {
+    public UserData() {
     }
 
-    public User(String username, String fullname, String email, String password, String phoneNumber, String gender, String owninfo, String age) {
+    public UserData(String username, String fullname, String email, String password, String phoneNumber, String gender, String owninfo, String age) {
         this.username = username;
         this.fullname = fullname;
         this.email = email;
