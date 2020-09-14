@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Users.Sign1">
+    tools:context=".Users.signUp.Sign1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,6 +118,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/roboto_slab"
                 android:inputType="phone"
+                android:maxLength="12"
                 android:textColor="@color/mainTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 

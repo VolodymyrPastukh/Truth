@@ -1,12 +1,29 @@
 package com.teamLP.truth.Users.model;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
+import com.teamLP.truth.Users.login.Login;
+import com.teamLP.truth.art.Content;
+import com.teamLP.truth.art.model.ArticleModel;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +45,59 @@ public class UserModel {
         callback.onSignUp(user.username);
     }
 
+    public void loginUser(final String phoneNumber, final String password, final LoginUserCallback callback){
+
+        Query checkUser = referenceDB.orderByChild("phoneNumber").equalTo(phoneNumber);
+
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String systemPassword = snapshot.child(phoneNumber).child("password").getValue(String.class);
+                    if(systemPassword.equals(password)){
+                        String username = snapshot.child(phoneNumber).child("username").getValue(String.class);
+                        callback.onLogin(0, username);
+                    }
+                    else{
+                        callback.onLogin(1, null);
+                    }
+                }else{
+                    callback.onLogin(2, null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onLogin(3, null);
+            }
+        });
+    }
+
+    public void changePassword(final String password, final ChangePasswordCallback callback){
+
+        referenceDB.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                String lk = currentData.getValue(String.class);
+                if (lk == null) {
+                    return Transaction.success(currentData);
+                }
+                currentData.setValue(password);
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                if (error == null) {
+                    callback.onChange();
+                } else {
+                    Log.e("Password change: ", "error" + error);
+                }
+            }
+        });
+    }
+
 
 
     public interface VerificationCallback{
@@ -36,6 +106,14 @@ public class UserModel {
 
     public interface SignUpCallback{
         void onSignUp(String name);
+    }
+
+    public interface LoginUserCallback{
+        void onLogin(int isLogin, String info);
+    }
+
+    public interface ChangePasswordCallback{
+        void onChange();
     }
 
     class VerificationUser{
@@ -79,4 +157,6 @@ public class UserModel {
                     }
                 };
     }
+
+
 }

@@ -13,14 +13,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.teamLP.truth.Users.Login;
+import com.teamLP.truth.Users.login.Login;
 import com.teamLP.truth.Users.model.UserData;
 import com.teamLP.truth.Users.model.UserModel;
 
 public class VerificationPresenter {
-    UserModel model;
-    Verification view;
-    String systemCode;
+    private UserModel model;
+    private Verification view;
+    private String systemCode;
 
     public VerificationPresenter(UserModel model) {
         this.model = model;
@@ -29,6 +29,7 @@ public class VerificationPresenter {
     public void setView(Verification view) {
         this.view = view;
     }
+
 
     public void verificationPhone(String phone){
         model.verificationPhone(phone, new UserModel.VerificationCallback() {
@@ -61,9 +62,13 @@ public class VerificationPresenter {
                         if (task.isSuccessful()) {
                             Log.d("USER_VERIFICATION", "signInWithCredential:success");
                             Toast.makeText(view, "Verification completed!)", Toast.LENGTH_SHORT).show();
-                            view.addUser();
-                            Intent completeSignUp = new Intent( view, Login.class);
-                            view.startActivity(completeSignUp);
+                            if(view.action.equalsIgnoreCase("sign_up")){
+                                view.signIn();
+                            }else{
+                                view.changePassword();
+                            }
+                            Log.e("Verification: ", " unknown operation");
+
 
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

@@ -18,7 +18,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
-import com.teamLP.truth.Users.Login;
+import com.teamLP.truth.Users.SessionManager;
+import com.teamLP.truth.Users.login.Login;
 import com.teamLP.truth.R;
 import com.teamLP.truth.Users.WelcomeScreen;
 import com.teamLP.truth.art.Article.Article;
@@ -135,6 +136,8 @@ public class Content extends AppCompatActivity
                     fragmentManager.beginTransaction().replace(R.id.flContent, profile).commit();
                     break;
                 case R.id.nav_logout:
+                    SessionManager sessionManager = new SessionManager(this);
+                    sessionManager.logoutFromSession();
                     Intent logout = new Intent(this, WelcomeScreen.class);
                     startActivity(logout);
                     break;
@@ -193,7 +196,9 @@ public class Content extends AppCompatActivity
 
     }
 
-     @Override
+
+
+             @Override
      public void onBackPressed() {
          if(drawerLayout.isDrawerOpen(GravityCompat.START)){
              drawerLayout.closeDrawer(GravityCompat.START);

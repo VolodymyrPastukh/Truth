@@ -1,4 +1,4 @@
-package com.teamLP.truth.Users;
+package com.teamLP.truth.Users.signUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -44,6 +44,7 @@ public class SignUp extends AppCompatActivity implements Sign1.ToNextSignListene
         Intent intent = new Intent(this, Verification.class);
         intent.putExtra("userMainData", userMainData);
         intent.putExtra("userOtherData", userOtherData);
+        intent.putExtra("query", "sign_up");
         startActivity(intent);
     }
 }

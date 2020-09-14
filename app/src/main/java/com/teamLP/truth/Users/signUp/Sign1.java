@@ -1,4 +1,4 @@
-package com.teamLP.truth.Users;
+package com.teamLP.truth.Users.signUp;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ public class Sign1 extends Fragment implements View.OnClickListener {
     Button nextButton;
     ToNextSignListener mListener;
     TextInputLayout username, fullname, phoneNumber, email, password;
+    String correctPhone;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,18 +92,20 @@ public class Sign1 extends Fragment implements View.OnClickListener {
 
     private boolean validatePassword() {
         String val = password.getEditText().getText().toString().trim();
-        String checkPassword = "^"+
-                "(?=.*[a-zA-Z])" +
-                "(?=.*[@#$%^&+=])" +
+        String checkPassword = "^" +
+                "(?=.*[0-9])" +
+                "(?=.*[A-Z])" +
+                "(?=.*[a-z])" +
+                //"(?=.*[a-zA-Z])" +
                 "(?=\\S+$)" +
-                ".{4,}" +
+                ".{8,}" +
                 "$";
 
         if (val.isEmpty()) {
             password.setError("Fill in the field!");
             return false;
         } else if (!val.matches(checkPassword)) {
-            password.setError("Invalid password");
+            password.setError("Invalid password \n Sample: qweRTy123");
             return false;
         } else {
             password.setError(null);
@@ -114,16 +117,22 @@ public class Sign1 extends Fragment implements View.OnClickListener {
     private boolean validatePhone() {
         String val = phoneNumber.getEditText().getText().toString().trim();
 
-
         if (val.isEmpty()) {
             phoneNumber.setError("Fill in the field!");
             return false;
-        }else if(val.length() != 11){
+        } else if (val.length() < 10 | val.length() > 12) {
             phoneNumber.setError("Incorrect number");
             return false;
+        } else if (val.length() == 10) {
+            correctPhone = "+38" + val;
+            return true;
+        } else if (val.length() == 12) {
+            correctPhone = "+" + val;
+            return true;
         } else {
-            fullname.setError(null);
-            fullname.setErrorEnabled(false);
+            correctPhone = val;
+            phoneNumber.setError(null);
+            phoneNumber.setErrorEnabled(false);
             return true;
         }
     }
@@ -131,7 +140,7 @@ public class Sign1 extends Fragment implements View.OnClickListener {
 
         @Override
         public void onClick (View v){
-            if(!validateUsername() | !validateFullname() | !validateEmail() | !validatePassword()){
+            if(!validateUsername() | !validateFullname() | !validateEmail() | !validatePassword() | !validatePhone()){
                 return;
             }
 
