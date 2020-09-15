@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".art.Profile">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".art.profile.Profile">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -92,8 +96,17 @@
             android:textColor="@color/mainTextColor"
             android:fontFamily="@font/roboto_slab_light"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerList"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+
 
 
 
     </LinearLayout>
+</ScrollView>
 </FrameLayout>

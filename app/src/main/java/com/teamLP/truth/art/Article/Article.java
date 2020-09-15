@@ -1,5 +1,6 @@
 package com.teamLP.truth.art.Article;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 import com.teamLP.truth.R;
+import com.teamLP.truth.art.TopArticles.TopArticles;
 import com.teamLP.truth.art.model.ArticleData;
 import com.teamLP.truth.art.model.ArticleModel;
 
@@ -38,6 +40,7 @@ public class Article extends Fragment {
 
     private static final String NAME_ARTICLE = "name_article";
     private String aName;
+    private OnOpenAuthorProfileListener mListener;
 
     public static Article newInstance(String nameArticle) {
         Bundle args = new Bundle();
@@ -58,6 +61,14 @@ public class Article extends Fragment {
             @Override
             public void onClick(View v) {
                 presenter.likeArticle(aName);
+            }
+        });
+
+        owner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String _owner = owner.getText().toString().trim();
+                mListener.onOpenProfile(_owner);
             }
         });
 
@@ -109,6 +120,21 @@ public class Article extends Fragment {
          likes.setText(String.valueOf(lukas + 1));
          like.setClickable(false);
          like.setImageResource(R.drawable.icon_heart_black);
+    }
+
+    public interface OnOpenAuthorProfileListener{
+        void onOpenProfile(String owner);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (OnOpenAuthorProfileListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " должен реализовывать интерфейс OnOpenAuthorProfileListener");
+        }
     }
 
 }

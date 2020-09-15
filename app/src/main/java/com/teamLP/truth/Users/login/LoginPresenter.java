@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.teamLP.truth.Users.SessionManager;
+import com.teamLP.truth.Users.model.UserData;
 import com.teamLP.truth.Users.model.UserModel;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class LoginPresenter {
         view.progresBar.setVisibility(View.VISIBLE);
         model.loginUser(correctPhone, password, new UserModel.LoginUserCallback() {
             @Override
-            public void onLogin(int isLogin, String info) {
+            public void onLogin(int isLogin, UserData userData) {
                 switch (isLogin) {
                     case 0:
                         view.progresBar.setVisibility(View.GONE);
@@ -42,8 +43,9 @@ public class LoginPresenter {
                         view.enteredPhone.setErrorEnabled(false);
                         view.enteredPassword.setError(null);
                         view.enteredPassword.setErrorEnabled(false);
+                        loginSession(userData);
                         rememberMe();
-                        view.enterTheVoid(info, correctPhone);
+                        view.enterTheVoid(userData.getUsername(), correctPhone);
                         break;
                     case 1:
                         view.progresBar.setVisibility(View.GONE);
@@ -67,17 +69,22 @@ public class LoginPresenter {
         });
     }
 
+    private void loginSession(UserData _userData){
+        SessionManager sessionManager = new SessionManager(view, SessionManager.USERLOGIN_SESSION);
+        sessionManager.createUserLoginSession(_userData);
+    }
+
     private void rememberMe(){
         if(view.rememberMe.isChecked()){
             final String phone = view.enteredPhone.getEditText().getText().toString().trim();
             final String password = view.enteredPassword.getEditText().getText().toString().trim();
-            SessionManager sessionManager = new SessionManager(view);
+            SessionManager sessionManager = new SessionManager(view, SessionManager.REMEMBERME_SESSION);
             sessionManager.createRememberMeSession(phone,password);
         }
     }
 
     public void startLoginSession(){
-        SessionManager sessionManager = new SessionManager(view);
+        SessionManager sessionManager = new SessionManager(view, SessionManager.REMEMBERME_SESSION);
         HashMap<String, String> loginData = sessionManager.getRememberMeDataFromSession();
         view.editPhone.setText(loginData.get(SessionManager.KEY_PHONE));
         view.editPassword.setText(loginData.get(SessionManager.KEY_PASSWORD));

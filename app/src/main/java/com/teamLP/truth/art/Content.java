@@ -26,12 +26,14 @@ import com.teamLP.truth.art.Article.Article;
 import com.teamLP.truth.art.SelectedCategory.SelectedCategory;
 import com.teamLP.truth.art.TopArticles.TopArticles;
 import com.teamLP.truth.art.WriteArticle.WriteArticle;
+import com.teamLP.truth.art.profile.Profile;
 
 public class Content extends AppCompatActivity
         implements
         NavigationView.OnNavigationItemSelectedListener,
         TopArticles.OnSelectArticleListener,
-        Categories.OnSelectCategoryListener
+        Categories.OnSelectCategoryListener,
+        Article.OnOpenAuthorProfileListener
          {
 
 
@@ -132,12 +134,14 @@ public class Content extends AppCompatActivity
                     break;
                 case R.id.nav_profile:
                     fragmentManager = getSupportFragmentManager();
-                    Fragment profile = Profile.newInstance(phone);
+                    Fragment profile = Profile.newInstance(owner);
                     fragmentManager.beginTransaction().replace(R.id.flContent, profile).commit();
                     break;
                 case R.id.nav_logout:
-                    SessionManager sessionManager = new SessionManager(this);
-                    sessionManager.logoutFromSession();
+                    SessionManager userLogin = new SessionManager(this, SessionManager.USERLOGIN_SESSION);
+                    SessionManager rememberMe = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
+                    userLogin.logoutFromUserSession();
+                    rememberMe.logoutFromRememberMeSession();
                     Intent logout = new Intent(this, WelcomeScreen.class);
                     startActivity(logout);
                     break;
@@ -225,4 +229,11 @@ public class Content extends AppCompatActivity
         Fragment newCategory = SelectedCategory.newInstance(category);
         fragmentManager.beginTransaction().replace(R.id.flContent, newCategory).commit();
     }
-}
+
+     @Override
+     public void onOpenProfile(String owner) {
+         fragmentManager = getSupportFragmentManager();
+         Fragment profile = Profile.newInstance(owner);
+         fragmentManager.beginTransaction().replace(R.id.flContent, profile).commit();
+     }
+ }

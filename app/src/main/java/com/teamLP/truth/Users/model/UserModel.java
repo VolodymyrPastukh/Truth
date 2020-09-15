@@ -23,8 +23,14 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.teamLP.truth.Users.login.Login;
 import com.teamLP.truth.art.Content;
+import com.teamLP.truth.art.model.ArticleData;
 import com.teamLP.truth.art.model.ArticleModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class UserModel {
@@ -56,10 +62,11 @@ public class UserModel {
                     String systemPassword = snapshot.child(phoneNumber).child("password").getValue(String.class);
                     if(systemPassword.equals(password)){
                         String username = snapshot.child(phoneNumber).child("username").getValue(String.class);
-                        callback.onLogin(0, username);
+                        UserData userData = snapshot.child(phoneNumber).getValue(UserData.class);
+                        callback.onLogin(0, userData);
                     }
                     else{
-                        callback.onLogin(1, null);
+                        callback.onLogin(1,  null);
                     }
                 }else{
                     callback.onLogin(2, null);
@@ -68,7 +75,7 @@ public class UserModel {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                callback.onLogin(3, null);
+                callback.onLogin(3,  null);
             }
         });
     }
@@ -98,6 +105,32 @@ public class UserModel {
         });
     }
 
+    public void loadUsers(final LoadUserDataCallback callback){
+        final List<UserData> users = new ArrayList<>();
+        referenceDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (users.size() > 0) {
+                    users.clear();
+                }
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    UserData user = ds.getValue(UserData.class);
+                    assert user != null;
+                    users.add(user);
+                    callback.onLoadUsers(users);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onLoadUsers(null);
+                Log.e("Users Load error: ", error.toString());
+            }
+        });
+    }
+
 
 
     public interface VerificationCallback{
@@ -109,11 +142,15 @@ public class UserModel {
     }
 
     public interface LoginUserCallback{
-        void onLogin(int isLogin, String info);
+        void onLogin(int isLogin, UserData userData);
     }
 
     public interface ChangePasswordCallback{
         void onChange();
+    }
+
+    public interface LoadUserDataCallback{
+        void onLoadUsers(List<UserData> users);
     }
 
     class VerificationUser{
@@ -157,6 +194,10 @@ public class UserModel {
                     }
                 };
     }
+
+
+
+
 
 
 }

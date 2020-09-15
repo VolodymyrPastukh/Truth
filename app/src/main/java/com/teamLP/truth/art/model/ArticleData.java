@@ -42,12 +42,45 @@ public class ArticleData {
         randomLikes();
     }
 
+
     private void randomLikes(){
         likes = new Random().nextInt(138 + 1) * new Random().nextInt(30);
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getNameArticle() {
+        return nameArticle;
+    }
+
+    public String getCategoryArticle() {
+        return categoryArticle;
+    }
+
+    public String getDescriptionArticle() {
+        return descriptionArticle;
+    }
+
+    public String getContentArticle() {
+        return contentArticle;
+    }
+
+    public String getDateArticle() {
+        return dateArticle;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public String getImage() {
+        return image;
     }
 }
 
