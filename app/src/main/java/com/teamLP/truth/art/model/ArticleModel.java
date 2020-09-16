@@ -81,7 +81,7 @@ public class ArticleModel {
     public void addArticle(ArticleData article, AddArticleCallback callback) {
         AddArticle addArticle = new AddArticle(callback);
         addArticle.execute(article);
-    }
+    } //метод додавання статті
 
     public void uploadImage(Bitmap bitmap, String name, final UploadImageCallback callback) {
 
@@ -89,7 +89,7 @@ public class ArticleModel {
 
         Log.i("Bitmaps == ", bitmap.toString());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
         byte[] byteArr = baos.toByteArray();
         final StorageReference childRef = referenceStore.child(name);
         UploadTask uploadTask = childRef.putBytes(byteArr);
@@ -110,7 +110,7 @@ public class ArticleModel {
         });
 
 
-    }
+    } //метод завантаження зображення
 
     public interface LoadArticlesCallback {
         void onLoad(List<ArticleData> articles);
@@ -132,7 +132,11 @@ public class ArticleModel {
         void onUploadImage(String uri);
     }
 
-    class LoadArticleData extends AsyncTask<String, Void, Void> { //Клас для асинхронної дії отримання статті
+
+    /*
+    Клас для асинхронної дії отримання статті
+     */
+    class LoadArticleData extends AsyncTask<String, Void, Void> {
 
         LoadArticleDataCallback callback;
 
@@ -173,6 +177,9 @@ public class ArticleModel {
         }
     }
 
+    /*
+    Клас для асинхронної дії лайка
+     */
     class LikeArticle extends AsyncTask<String, Void, Void> { //Клас для асинхронної дії ставлення лайку
 
         LikeArticleCallback callback;
@@ -210,6 +217,10 @@ public class ArticleModel {
         }
     }
 
+
+    /*
+    Клас для асинхронної дії додавання статті
+     */
     class AddArticle extends AsyncTask<ArticleData, Void, Void> {
 
         AddArticleCallback callback;

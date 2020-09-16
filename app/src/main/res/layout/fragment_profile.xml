@@ -80,11 +80,6 @@
             android:textColor="@color/mainTextColor"
             android:fontFamily="@font/roboto_slab"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@drawable/separator"
-            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/profile_ownInfo"
@@ -94,7 +89,30 @@
             android:text="About me:"
             android:textSize="20sp"
             android:textColor="@color/mainTextColor"
-            android:fontFamily="@font/roboto_slab_light"/>
+            android:fontFamily="@font/roboto_slab"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/separator"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/my_likes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Likes: "
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto_slab_light"
+            android:textColor="@color/mainTextColor"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My articles: "
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto_slab_light"
+            android:textColor="@color/mainTextColor"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerList"

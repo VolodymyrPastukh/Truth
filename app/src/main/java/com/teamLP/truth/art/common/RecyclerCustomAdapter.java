@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.picasso.Picasso;
 import com.teamLP.truth.R;
 import com.teamLP.truth.art.model.ArticleData;
@@ -19,10 +21,13 @@ import java.util.List;
 public class RecyclerCustomAdapter extends RecyclerView.Adapter<RecyclerCustomAdapter.ViewHolder>{
     private LayoutInflater inflater;
     private List<ArticleData> articleDataList;
+    private Context context;
+
 
     public RecyclerCustomAdapter(Context context, List<ArticleData> articleData) {
         this.articleDataList = articleData;
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
     }
     @Override
     public RecyclerCustomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,13 +38,16 @@ public class RecyclerCustomAdapter extends RecyclerView.Adapter<RecyclerCustomAd
 
     @Override
     public void onBindViewHolder(RecyclerCustomAdapter.ViewHolder holder, int position) {
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(context)); //Image Loader
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
         ArticleData article = articleDataList.get(position);
         holder.title.setText(article.getNameArticle());
         holder.date.setText(article.getDateArticle());
         holder.likes.setText("LIKES: " + String.valueOf(article.getLikes()));
         if(article.getImage() != null){
             holder.image.setVisibility(View.VISIBLE);
-            Picasso.get().load(article.getImage()).into(holder.image);
+            imageLoader.displayImage(article.getImage(), holder.image);
         }else{
             holder.image.setVisibility(View.GONE);
         }

@@ -8,7 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.teamLP.truth.R;
 import com.teamLP.truth.art.model.ArticleData;
 
@@ -27,8 +28,11 @@ public class ArticleAdapter extends ArrayAdapter<ArticleData> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         View view = inflater.inflate(R.layout.list_articles, parent, false);
+
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(context)); //Image Loader
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
         ArticleData article = articles.get(position);
         TextView articleNameView = (TextView) view.findViewById(R.id.articleName);
         TextView articleCategoryView = (TextView) view.findViewById(R.id.articleCategory);
@@ -45,7 +49,7 @@ public class ArticleAdapter extends ArrayAdapter<ArticleData> {
         articleDateView.setText(article.dateArticle);
         if (article.image != null) {
             articlePictureView.setVisibility(View.VISIBLE);
-            Picasso.get().load(article.image).into(articlePictureView);
+            imageLoader.displayImage(article.getImage(), articlePictureView); //Load image
         } else {
             articlePictureView.setVisibility(View.GONE);
         }

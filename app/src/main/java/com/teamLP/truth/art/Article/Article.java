@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.picasso.Picasso;
 import com.teamLP.truth.R;
 import com.teamLP.truth.art.TopArticles.TopArticles;
@@ -32,7 +34,7 @@ public class Article extends Fragment {
     ImageView picture;
     ImageView like;
 
-
+    ImageLoader imageLoader;
 
     DatabaseReference referenceDB;
     private ArticleModel model;
@@ -88,6 +90,9 @@ public class Article extends Fragment {
         likes = rootView.findViewById(R.id.viewLikes);
         like = rootView.findViewById(R.id.like);
 
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getActivity()));
+        imageLoader = ImageLoader.getInstance();
+
         referenceDB = FirebaseDatabase.getInstance().getReference("Article");
         model = new ArticleModel(referenceDB);
         presenter = new ArticlePresenter(model);
@@ -96,8 +101,7 @@ public class Article extends Fragment {
     }
 
 
-    protected void viewArticle(ArticleData selectArticle) {
-        ArticleData art = selectArticle;
+    protected void viewArticle(ArticleData art) {
         name.setText(art.nameArticle);
         category.setText("[" + art.categoryArticle + "]");
         description.setText(art.descriptionArticle);
@@ -105,9 +109,9 @@ public class Article extends Fragment {
         owner.setText(art.owner);
         date.setText(art.dateArticle);
         likes.setText(Integer.toString(art.likes));
-        if (selectArticle.image != null) {
+        if (art.image != null) {
             picture.setVisibility(View.VISIBLE);
-            Picasso.get().load(selectArticle.image).into(picture);
+            imageLoader.displayImage(art.getImage(), picture);
         } else {
             picture.setVisibility(View.GONE);
         }

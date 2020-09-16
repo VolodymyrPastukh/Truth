@@ -97,7 +97,7 @@
                 android:id="@+id/viewPictureArticle"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:src="@drawable/image_icon" />
+                android:src="@drawable/image_photo" />
 
 
             <View

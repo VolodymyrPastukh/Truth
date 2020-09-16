@@ -32,13 +32,11 @@ import java.util.List;
 public class Profile extends Fragment {
 
     RecyclerView recyclerView;
-   TextView username, fullname, email, phone, gender, age, ownInfo;
+   TextView username, fullname, email, phone, gender, age, ownInfo, myLikes;
    DatabaseReference referenceDB;
    UserModel model;
    ProfilePresenter presenter;
    ArticleModel articleModel;
-   List<ArticleData> articleDataList;
-   String author;
 
 
 
@@ -60,7 +58,13 @@ public class Profile extends Fragment {
 
         init(rootView);
 
-        loadAuthorArticles();
+        assert getArguments() != null;
+        final String _username = getArguments().getString(USERNAME);
+
+        presenter.loadUserData(_username);
+        presenter.loadAuthorArticles(_username);
+
+
 
         return rootView;
     }
@@ -73,38 +77,17 @@ public class Profile extends Fragment {
         gender = rootView.findViewById(R.id.profile_gender);
         age = rootView.findViewById(R.id.profile_age);
         ownInfo = rootView.findViewById(R.id.profile_ownInfo);
+        myLikes = rootView.findViewById(R.id.my_likes);
         recyclerView = rootView.findViewById(R.id.recyclerList);
 
         referenceDB = FirebaseDatabase.getInstance().getReference("User");
         model = new UserModel(referenceDB);
         presenter = new ProfilePresenter(model);
-
-
-        assert getArguments() != null;
-        final String _username = getArguments().getString(USERNAME);
-//        if(_username == null){
-//            presenter.loadUserData();
-//        }else{
-            author = _username;
-            presenter.loadUserData(_username);
-//        }
-
         presenter.setView(this);
+
     }
 
-//    public void loadOwnProfile(){
-//        SessionManager sessionManager = new SessionManager(getActivity(), SessionManager.USERLOGIN_SESSION);
-//        HashMap<String, String> userData = sessionManager.getUserLoginDataFromSession();
-//
-//        author = userData.get(SessionManager.KEY_USERNAME);
-//        username.setText(userData.get(SessionManager.KEY_USERNAME));
-//        fullname.setText(fullname.getText()+ " " + userData.get(SessionManager.KEY_USERFULLNAME));
-//        email.setText(email.getText()+ " " + userData.get(SessionManager.KEY_USEREMAIL));
-//        phone.setText(phone.getText()+ " " + userData.get(SessionManager.KEY_USERPHONE));
-//        gender.setText(gender.getText()+ " " + userData.get(SessionManager.KEY_USERGENDER));
-//        age.setText(age.getText()+ " " + userData.get(SessionManager.KEY_USERAGE));
-//        ownInfo.setText(ownInfo.getText() + " " + userData.get(SessionManager.KEY_USERINFO));
-//    }
+
 
     public void loadUserProfile(UserData user){
         username.setText(user.getUsername());
@@ -116,27 +99,17 @@ public class Profile extends Fragment {
         ownInfo.setText("About me: " + user.getOwninfo());
     }
 
-    private void loadAuthorArticles(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Article");
-        articleModel = new ArticleModel(ref);
-        articleModel.loadArticles(new ArticleModel.LoadArticlesCallback() {
-            @Override
-            public void onLoad(List<ArticleData> articles) {
-                List<ArticleData> data = new ArrayList<>();
-                for(ArticleData art: articles){
-                    if(art.getOwner().equals(author)){
-                        data.add(art);
-                    }
-                }
-                if(getActivity() != null) {
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-                    SnapHelper snapHelper = new PagerSnapHelper();
-                    recyclerView.setOnFlingListener(null);
-                    snapHelper.attachToRecyclerView(recyclerView);
-                    RecyclerCustomAdapter recyclerCustomAdapter = new RecyclerCustomAdapter(getActivity(), data);
-                    recyclerView.setAdapter(recyclerCustomAdapter);
-                }
-            }
-        });
+    public void viewProfileArticles(List<ArticleData> articleData, int likes){
+        if(getActivity() != null) {
+            myLikes.setText("My Likes: " + likes);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            SnapHelper snapHelper = new PagerSnapHelper();
+            recyclerView.setOnFlingListener(null);
+            snapHelper.attachToRecyclerView(recyclerView);
+            RecyclerCustomAdapter recyclerCustomAdapter = new RecyclerCustomAdapter(getActivity(), articleData);
+            recyclerView.setAdapter(recyclerCustomAdapter);
+        }
     }
+
+
 }
