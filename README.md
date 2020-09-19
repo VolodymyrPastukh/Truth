@@ -9,6 +9,10 @@ This program is built in MVP pattern and consists of two main parts.
 - Presenters carry out program login.
 - uses shared preference for remember session
 
+![alt text](screenshots/welcome_screen.jpg "Описание будет тут")
+![alt text](screenshots/login.jpg "Описание будет тут")
+![alt text](screenshots/auth.jpg "Описание будет тут")
+
 User can enter in app as guest, but if he want to write article, he have to sign up.
 His data store in realtime database Firebase.
 Authentication is by phone number.
