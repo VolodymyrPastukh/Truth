@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
@@ -51,6 +52,13 @@ public class Verification extends AppCompatActivity {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
 
+        findViewById(R.id.verificationButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.verifyCode();
+            }
+        });
+
     }
 
 
@@ -90,8 +98,5 @@ public class Verification extends AppCompatActivity {
         startActivity(completeSignUp);
     }
 
-    //button method
-    public void finishSignUp(){
-        presenter.verifyCode();
-    }
+
 }

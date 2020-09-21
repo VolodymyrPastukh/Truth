@@ -34,11 +34,11 @@ public class WriteArticlePresenter {
         }
     }
 
-    private void addArticle(ArticleData article){
+    private void addArticle(final ArticleData article){
         model.addArticle(article, new ArticleModel.AddArticleCallback() {
             @Override
             public void onAdd() {
-                view.cleanFields();
+                view.finishWriting(article.getNameArticle());
             }
         });
     }

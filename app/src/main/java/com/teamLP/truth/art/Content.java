@@ -225,6 +225,7 @@ public class Content extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.flContent, newCategory).commit();
     }
 
+    /*---Open profile---*/
     @Override
     public void onOpenProfile(String owner) {
         fragmentManager = getSupportFragmentManager();

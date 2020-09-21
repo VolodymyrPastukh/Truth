@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.teamLP.truth.R;
+import com.teamLP.truth.art.TopArticles.TopArticles;
 import com.teamLP.truth.art.model.ArticleModel;
 
 
@@ -41,6 +42,7 @@ public class WriteArticle extends Fragment implements View.OnClickListener {
     Boolean isPhoto = false;
     Date dateNow = new Date();
     String category;
+    private TopArticles.OnSelectArticleListener mListener;
 
     ArticleModel model;
     WriteArticlePresenter presenter;
@@ -138,12 +140,14 @@ public class WriteArticle extends Fragment implements View.OnClickListener {
         return articleData;
     }
 
-    public void cleanFields(){
+    public void finishWriting(String nameArticle){
         categoryArticle.setSelection(6);
         name.getEditText().setText("");
         description.getEditText().setText("");
         content.getEditText().setText("");
         picture1.setImageResource(R.drawable.image_photo);
+
+        mListener.onSelectArticle(nameArticle);
     }
 
 

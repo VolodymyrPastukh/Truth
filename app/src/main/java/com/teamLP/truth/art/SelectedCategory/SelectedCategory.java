@@ -4,6 +4,7 @@ package com.teamLP.truth.art.SelectedCategory;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,7 @@ public class SelectedCategory extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 String message = ((TextView) view.findViewById(R.id.articleName)).getText().toString().trim();
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                Log.i("Open article: ", message);
                 selectArticle.onSelectArticle(message);
             }
         });
