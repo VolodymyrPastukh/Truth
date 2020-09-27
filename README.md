@@ -2,7 +2,7 @@
 ##### "Truth" is a modern electronic newspaper, which makes voice of everyone citizen matter. All official media try to control information and our minds. So we have to destroy such system. 
 >We will never be slave, but we will be journalists.
 
-This program is built in MVP pattern and consists of two main parts. 
+This program is built on MVP pattern and consists of two main parts. 
 1. First part operates information of users.  
 - includes such views as ***SignUp, Login, Verification, Change Password***.
 - ***UserModel*** contains all business logic and manages connection to database.
