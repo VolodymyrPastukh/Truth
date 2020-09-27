@@ -18,15 +18,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
-import com.teamLP.truth.Users.Login;
+import com.teamLP.truth.Users.SessionManager;
+import com.teamLP.truth.Users.login.Login;
 import com.teamLP.truth.R;
+import com.teamLP.truth.Users.WelcomeScreen;
+import com.teamLP.truth.art.Article.Article;
+import com.teamLP.truth.art.SelectedCategory.SelectedCategory;
+import com.teamLP.truth.art.TopArticles.TopArticles;
+import com.teamLP.truth.art.WriteArticle.WriteArticle;
+import com.teamLP.truth.art.profile.Profile;
 
 public class Content extends AppCompatActivity
         implements
         NavigationView.OnNavigationItemSelectedListener,
         TopArticles.OnSelectArticleListener,
-        Categories.OnSelectCategoryListener
-         {
+        Categories.OnSelectCategoryListener,
+        Article.OnOpenAuthorProfileListener {
 
 
     static final float END_SCALE = 0.7f;
@@ -37,8 +44,7 @@ public class Content extends AppCompatActivity
     Toolbar toolbar;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
-    String owner;
-
+    String owner, phone;
 
 
     @Override
@@ -46,10 +52,11 @@ public class Content extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        /*-----------Intent params----------*/
         Bundle startArgs = getIntent().getExtras();
         int key = startArgs.getInt("startKey");
-        owner =startArgs.getString("username");
+        owner = startArgs.getString("username");
+        phone = startArgs.getString("phone");
 
 
         /*-----------Hooks----------*/
@@ -62,10 +69,9 @@ public class Content extends AppCompatActivity
         /*----------Show-Items--------*/
         Menu menu = navigationView.getMenu();
 
-        if(key > 0){
+        if (key > 0) {
             menu.findItem(R.id.nav_login).setVisible(false);
-        }
-        else{
+        } else {
             menu.findItem(R.id.nav_logout).setVisible(false);
             menu.findItem(R.id.nav_profile).setVisible(false);
             menu.findItem(R.id.nav_write_articles).setVisible(false);
@@ -82,70 +88,75 @@ public class Content extends AppCompatActivity
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        //animateNavigationDrawer();
+        animateNavigationDrawer();
 
 
         /*-----------First page----------*/
-        if(key > 0){
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.flContent, new Categories());
-            fragmentTransaction.commit();
-        }
-        else{
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.flContent, new Categories());
-            fragmentTransaction.commit();
-        }
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.flContent, new TopArticles());
+        fragmentTransaction.commit();
+
 
     }
-
-
-
-
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            Class fragmentClass;
-            switch(item.getItemId()) {
+        Class fragmentClass;
+        switch (item.getItemId()) {
 
-                case R.id.nav_top_articles:
-                    fragmentClass = TopArticles.class;
-                    openFragment(fragmentClass);
-                    break;
-                case R.id.nav_write_articles:
-                    //fragmentClass = WriteArticle.class;
-                    fragmentManager = getSupportFragmentManager();
-                    Fragment writeArticle = WriteArticle.newInstance(owner);
-                    fragmentManager.beginTransaction().replace(R.id.flContent, writeArticle).commit();
-                    break;
-                case R.id.nav_categories:
-                    fragmentClass = Categories.class;
-                    openFragment(fragmentClass);
-                    break;
-                case R.id.nav_login:
-                    Intent loginIntent = new Intent(this, Login.class);
-                    startActivity(loginIntent);
-                    break;
-                default:
-                    fragmentClass = TopArticles.class;
-                    openFragment(fragmentClass);
-            }
+            case R.id.nav_top_articles:
+                fragmentClass = TopArticles.class;
+                openFragment(fragmentClass);
+                break;
+            case R.id.nav_write_articles:
+                fragmentManager = getSupportFragmentManager();
+                Fragment writeArticle = WriteArticle.newInstance(owner);
+                fragmentManager.beginTransaction().replace(R.id.flContent, writeArticle).commit();
+                break;
+            case R.id.nav_categories:
+                fragmentClass = Categories.class;
+                openFragment(fragmentClass);
+                break;
+            case R.id.nav_login:
+                Intent loginIntent = new Intent(this, Login.class);
+                startActivity(loginIntent);
+                break;
+            case R.id.nav_profile:
+                fragmentManager = getSupportFragmentManager();
+                Fragment profile = Profile.newInstance(owner);
+                fragmentManager.beginTransaction().replace(R.id.flContent, profile).commit();
+                break;
+            case R.id.nav_logout:
+                SessionManager userLogin = new SessionManager(this, SessionManager.USERLOGIN_SESSION);
+                SessionManager rememberMe = new SessionManager(this, SessionManager.REMEMBERME_SESSION);
+                userLogin.logoutFromUserSession();
+                rememberMe.logoutFromRememberMeSession();
+                Intent logout = new Intent(this, WelcomeScreen.class);
+                startActivity(logout);
+                break;
+            case R.id.nav_aboutus:
+                fragmentManager = getSupportFragmentManager();
+                Fragment aboutUs = AboutUs.newInstance(owner);
+                fragmentManager.beginTransaction().replace(R.id.flContent, aboutUs).commit();
+                break;
+            default:
+                fragmentClass = TopArticles.class;
+                openFragment(fragmentClass);
+        }
 
 
-            item.setChecked(true);
-            setTitle(item.getTitle());
-            drawerLayout.closeDrawer(GravityCompat.START);
+        item.setChecked(true);
+        setTitle(item.getTitle());
+        drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
 
-
-    private void openFragment(Class fragClass){
+    private void openFragment(Class fragClass) {
         Fragment fragment = null;
         try {
             fragment = (Fragment) fragClass.newInstance();
@@ -185,32 +196,40 @@ public class Content extends AppCompatActivity
 
     }
 
-     @Override
-     public void onBackPressed() {
-         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-             drawerLayout.closeDrawer(GravityCompat.START);
-         }
 
-     }
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+
+    }
 
 
-     /*----------------------------Fragment`s methods-----------------------------------*/
+    /*----------------------------Fragment`s methods-----------------------------------*/
     /*---Select article---*/
     @Override
-    public void onSelectArticle() {
-
+    public void onSelectArticle(String nameArticle) {
+        setTitle(nameArticle);
         fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.flContent, new Article());
-        fragmentTransaction.commit();
+        Fragment article = Article.newInstance(nameArticle);
+        fragmentManager.beginTransaction().replace(R.id.flContent, article).commit();
 
     }
 
     /*---Select category---*/
-    public void onSelectCategory(){
+    public void onSelectCategory(String category) {
+        setTitle(category);
         fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.flContent, new SelectedCategory());
-        fragmentTransaction.commit();
+        Fragment newCategory = SelectedCategory.newInstance(category);
+        fragmentManager.beginTransaction().replace(R.id.flContent, newCategory).commit();
+    }
+
+    /*---Open profile---*/
+    @Override
+    public void onOpenProfile(String owner) {
+        fragmentManager = getSupportFragmentManager();
+        Fragment profile = Profile.newInstance(owner);
+        fragmentManager.beginTransaction().replace(R.id.flContent, profile).commit();
     }
 }

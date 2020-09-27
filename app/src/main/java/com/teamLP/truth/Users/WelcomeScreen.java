@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.teamLP.truth.Users.login.Login;
+import com.teamLP.truth.Users.signUp.SignUp;
 import com.teamLP.truth.art.Content;
 import com.teamLP.truth.R;
 
@@ -46,5 +48,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+    }
 }

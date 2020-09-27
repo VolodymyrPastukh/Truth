@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.teamLP.truth">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.teamLP.truth"
+    android:versionName="1.0"
+    android:versionCode="1"
+    tools:ignore="GradleOverrides">
+    <uses-sdk android:targetSdkVersion="29" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Users.Verification"></activity>
         <activity
-            android:name=".Users.SignUp"
+            android:name=".Users.changePassword.ChangePassword"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".Users.Login" />
-        <activity android:name=".Users.WelcomeScreen">
+        <activity android:name=".Users.CheckPhone"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".Users.Verification.Verification"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".Users.signUp.SignUp"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Users.login.Login"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".Users.WelcomeScreen"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

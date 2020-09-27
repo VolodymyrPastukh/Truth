@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Users.Sign2">
+    tools:context=".Users.signUp.Sign2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,8 +39,8 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/radioFool"
-                android:text="Newspaper"/>
+                android:id="@+id/radioAlien"
+                android:text="Alien"/>
 
         </RadioGroup>
 
