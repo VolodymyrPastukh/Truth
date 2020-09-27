@@ -5,7 +5,7 @@
 This program is built in MVP pattern and consists of two main parts. 
 1. First part operates information of users.  
 - includes such views as ***SignUp, Login, Verification, Change Password***.
-- ***UserModel*** contains all business logic and manages connection to databse.
+- ***UserModel*** contains all business logic and manages connection to database.
 - Presenters carry out program login.
 - uses shared preference for remember session
 
