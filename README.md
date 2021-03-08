@@ -19,9 +19,9 @@ This program is built on MVP pattern and consists of two main parts.
 ![alt text](screenshots/sign_up.jpg "SignUp")  
 
 
-User can enter in app as guest, but if he want to write article, he have to sign up.
+User can enter in app as guest, but if he want to write article, he has to sign up.
 His data store in realtime database Firebase.
-Authentication is by phone number.
+Authentication happens by phone number.
 
 
 2. Second part operates information of articles.
